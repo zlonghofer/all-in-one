@@ -16,7 +16,7 @@ services:
       # AIO_DISABLE_BACKUP_SECTION: false # Setting this to true allows to hide the backup section in the AIO interface. See https://github.com/nextcloud/all-in-one#how-to-disable-the-backup-section
       APACHE_PORT: 11000 # Is needed for reverse proxy
       APACHE_IP_BINDING: 127.0.0.1 # Set for Caddy
-      # APACHE_ADDITIONAL_NETWORK: frontend_net # (Optional) Connect the apache container to an additional docker network. Needed when behind a web server or reverse proxy running in a different docker network on the same server. See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
+      APACHE_ADDITIONAL_NETWORK: aio_bridge # (Optional) Connect the apache container to an additional docker network. Needed when behind a web server or reverse proxy running in a different docker network on the same server. See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
       # BORG_RETENTION_POLICY: --keep-within=7d --keep-weekly=4 --keep-monthly=6 # Allows to adjust borgs retention policy. See https://github.com/nextcloud/all-in-one#how-to-adjust-borgs-retention-policy
       NEXTCLOUD_DATADIR: /home/zach/aio/data # Do not change after initialization
       NEXTCLOUD_MAX_TIME: 3600 # Can be adjusted if you need more. See https://github.com/nextcloud/all-in-one#how-to-adjust-the-max-execution-time-for-nextcloud
@@ -26,3 +26,8 @@ services:
 volumes:
   nextcloud_aio_mastercontainer:
     name: nextcloud_aio_mastercontainer # Do not change
+
+networks:
+  merged_aio_bridge:
+    name: merged_aio_bridge
+    external: true
